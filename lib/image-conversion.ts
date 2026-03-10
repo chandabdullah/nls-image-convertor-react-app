@@ -1,5 +1,3 @@
-import heic2any from "heic2any"
-
 export interface ConversionOptions {
   quality?: number
   bgColor?: string
@@ -8,7 +6,7 @@ export interface ConversionOptions {
 }
 
 // Check if file is HEIC/HEIF format
-function isHeicFile(file: File): boolean {
+export function isHeicFile(file: File): boolean {
   const fileName = file.name.toLowerCase()
   const mimeType = file.type.toLowerCase()
   return (
@@ -19,8 +17,10 @@ function isHeicFile(file: File): boolean {
   )
 }
 
-// Convert HEIC to a standard format (PNG) first
+// Convert HEIC to a standard format (PNG) first - uses dynamic import to avoid SSR issues
 async function convertHeicToBlob(file: File): Promise<Blob> {
+  // Dynamic import to avoid "window is not defined" error during SSR
+  const heic2any = (await import("heic2any")).default
   const result = await heic2any({
     blob: file,
     toType: "image/png",

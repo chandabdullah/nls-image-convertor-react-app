@@ -8,9 +8,8 @@ import { ImagePreview } from "@/components/image-preview"
 // import { AdvancedSettings } from "@/components/advanced-settings"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { convertImageFile, formatFileSize } from "@/lib/image-conversion"
+import { convertImageFile, formatFileSize, isHeicFile } from "@/lib/image-conversion"
 import { cn } from "@/lib/utils"
-import heic2any from "heic2any"
 
 export function ConverterCard() {
   const [file, setFile] = useState<File | null>(null)
@@ -38,12 +37,11 @@ export function ConverterCard() {
     setSourceFormat(format)
     
     // Check if file is HEIC/HEIF and convert for preview
-    const isHeic = format === "heic" || format === "heif" || 
-                   f.type === "image/heic" || f.type === "image/heif"
-    
     let previewUrl: string
-    if (isHeic) {
+    if (isHeicFile(f)) {
       try {
+        // Dynamic import to avoid SSR issues
+        const heic2any = (await import("heic2any")).default
         // Convert HEIC to PNG for preview
         const result = await heic2any({
           blob: f,
