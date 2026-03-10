@@ -14,9 +14,11 @@ export async function convertImageFile(
 
   return new Promise((resolve, reject) => {
     const img = new Image()
-    img.crossOrigin = "anonymous"
+    const objectUrl = URL.createObjectURL(file)
     
     img.onload = () => {
+      // Clean up the object URL after loading
+      URL.revokeObjectURL(objectUrl)
       const canvas = document.createElement("canvas")
       canvas.width = img.naturalWidth
       canvas.height = img.naturalHeight
@@ -65,10 +67,11 @@ export async function convertImageFile(
     }
 
     img.onerror = () => {
+      URL.revokeObjectURL(objectUrl)
       reject(new Error("Failed to load image"))
     }
 
-    img.src = URL.createObjectURL(file)
+    img.src = objectUrl
   })
 }
 
