@@ -30,7 +30,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Email Us</h3>
                     <p className="text-sm text-muted-foreground">
-                      contact@nextlevelsoftware.com
+                      info@thenextlevelsoftware.com
                     </p>
                   </div>
                 </div>
@@ -44,7 +44,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Location</h3>
                     <p className="text-sm text-muted-foreground">
-                      San Francisco, CA
+                      Faisalabad, Pakistan
                     </p>
                   </div>
                 </div>
