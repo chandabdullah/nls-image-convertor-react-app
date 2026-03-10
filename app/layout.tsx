@@ -1,17 +1,13 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
-const inter = Inter({ 
+const montserrat = Montserrat({ 
   subsets: ["latin"],
-  variable: "--font-inter"
-});
-
-const spaceGrotesk = Space_Grotesk({ 
-  subsets: ["latin"],
-  variable: "--font-space-grotesk"
+  variable: "--font-montserrat",
+  weight: ["300", "400", "500", "600", "700", "800"]
 });
 
 export const metadata: Metadata = {
@@ -34,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+      <body className={`${montserrat.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

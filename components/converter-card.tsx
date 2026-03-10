@@ -5,7 +5,7 @@ import { Download, Sparkles, ArrowRight, Check, Loader2 } from "lucide-react"
 import { UploadArea } from "@/components/upload-area"
 import { FormatSelector } from "@/components/format-selector"
 import { ImagePreview } from "@/components/image-preview"
-import { AdvancedSettings } from "@/components/advanced-settings"
+// import { AdvancedSettings } from "@/components/advanced-settings"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { convertImageFile, formatFileSize } from "@/lib/image-conversion"
@@ -124,10 +124,10 @@ export function ConverterCard() {
             sourceFormat={sourceFormat}
           />
 
-          {/* Image Preview */}
-          {srcUrl && !conversionUrl && (
+          {/* Image Preview - Always show original when file is selected */}
+          {srcUrl && (
             <div className="pt-2">
-              <p className="text-sm font-medium text-muted-foreground mb-3">Original Image</p>
+              <p className="text-sm font-medium text-muted-foreground mb-3">Original Image Preview</p>
               <ImagePreview src={srcUrl} alt="Original" />
             </div>
           )}
@@ -161,8 +161,8 @@ export function ConverterCard() {
             )}
           </Button>
 
-          {/* Advanced Settings */}
-          <AdvancedSettings
+          {/* Advanced Settings - Commented out for now */}
+          {/* <AdvancedSettings
             quality={quality}
             setQuality={setQuality}
             bgColor={bgColor}
@@ -171,28 +171,33 @@ export function ConverterCard() {
             setRemoveMetadata={setRemoveMetadata}
             autoRotate={autoRotate}
             setAutoRotate={setAutoRotate}
-          />
+          /> */}
         </div>
 
-        {/* Result Section */}
+        {/* Result Section - Converted Image Preview */}
         {conversionUrl && (
-          <div className="px-6 pb-6 pt-2 border-t border-border bg-muted/20">
+          <div className="px-6 pb-6 pt-4 border-t border-border bg-muted/20">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-foreground">Converted Image</p>
+                  <p className="text-sm font-medium text-foreground">Converted Image Preview</p>
                   {convertedBlob && (
                     <p className="text-xs text-muted-foreground">
                       New size: {formatFileSize(convertedBlob.size)}
-                      {file && (
-                        <span className="ml-2 text-primary">
+                      {file && convertedBlob.size < file.size && (
+                        <span className="ml-2 text-green-600 dark:text-green-400 font-medium">
                           ({Math.round((1 - convertedBlob.size / file.size) * 100)}% smaller)
+                        </span>
+                      )}
+                      {file && convertedBlob.size >= file.size && (
+                        <span className="ml-2 text-muted-foreground">
+                          ({Math.round((convertedBlob.size / file.size - 1) * 100)}% larger)
                         </span>
                       )}
                     </p>
                   )}
                 </div>
-                <Badge className="uppercase font-mono">{targetFormat}</Badge>
+                <Badge className="uppercase font-mono bg-green-600 text-white">{targetFormat}</Badge>
               </div>
               
               <ImagePreview src={conversionUrl} alt="Converted" />
