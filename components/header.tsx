@@ -12,27 +12,34 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center group">
+        {/* Left side - NLS Image Converter */}
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-foreground text-sm sm:text-base">NLS Image Converter</span>
+        </div>
+
+        {/* Center - Logo */}
+        <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center group">
           {/* Light mode logo (shown when not dark) */}
           <Image
             src="/images/logo-light.png"
             alt="Next Level Software"
-            width={180}
-            height={50}
-            className="h-10 w-auto dark:hidden"
+            width={160}
+            height={44}
+            className="h-8 sm:h-10 w-auto dark:hidden"
             priority
           />
           {/* Dark mode logo (shown when dark) */}
           <Image
             src="/images/logo-dark.png"
             alt="Next Level Software"
-            width={180}
-            height={50}
-            className="h-10 w-auto hidden dark:block"
+            width={160}
+            height={44}
+            className="h-8 sm:h-10 w-auto hidden dark:block"
             priority
           />
         </Link>
         
+        {/* Right side - Actions */}
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/contact" className="flex items-center gap-2">

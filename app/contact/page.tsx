@@ -8,7 +8,7 @@ export default function ContactPage() {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-grow pt-24 pb-12 px-4">
+      <main className="flex-grow pt-24 pb-24 px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">

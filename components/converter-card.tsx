@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { convertImageFile, formatFileSize } from "@/lib/image-conversion"
 import { cn } from "@/lib/utils"
+import heic2any from "heic2any"
 
 export function ConverterCard() {
   const [file, setFile] = useState<File | null>(null)
@@ -27,7 +28,7 @@ export function ConverterCard() {
   const [removeMetadata, setRemoveMetadata] = useState<boolean>(true)
   const [autoRotate, setAutoRotate] = useState<boolean>(true)
 
-  const handleFile = useCallback((f: File) => {
+  const handleFile = useCallback(async (f: File) => {
     // Cleanup previous URLs
     if (srcUrl) URL.revokeObjectURL(srcUrl)
     if (conversionUrl) URL.revokeObjectURL(conversionUrl)
@@ -35,8 +36,32 @@ export function ConverterCard() {
     setFile(f)
     const format = f.name.split(".").pop()?.toLowerCase() || ""
     setSourceFormat(format)
-    const url = URL.createObjectURL(f)
-    setSrcUrl(url)
+    
+    // Check if file is HEIC/HEIF and convert for preview
+    const isHeic = format === "heic" || format === "heif" || 
+                   f.type === "image/heic" || f.type === "image/heif"
+    
+    let previewUrl: string
+    if (isHeic) {
+      try {
+        // Convert HEIC to PNG for preview
+        const result = await heic2any({
+          blob: f,
+          toType: "image/png",
+          quality: 1,
+        })
+        const convertedBlob = Array.isArray(result) ? result[0] : result
+        previewUrl = URL.createObjectURL(convertedBlob)
+      } catch (err) {
+        console.error("Failed to convert HEIC for preview:", err)
+        // Fallback to original URL (might not display but won't crash)
+        previewUrl = URL.createObjectURL(f)
+      }
+    } else {
+      previewUrl = URL.createObjectURL(f)
+    }
+    
+    setSrcUrl(previewUrl)
     setConversionUrl(null)
     setConvertedBlob(null)
     setIsConverted(false)

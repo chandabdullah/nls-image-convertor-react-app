@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-grow pt-24 pb-12 px-4">
+      <main className="flex-grow pt-24 pb-24 px-4">
         {/* Hero Section */}
         <section className="max-w-4xl mx-auto text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">

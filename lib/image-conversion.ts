@@ -1,8 +1,33 @@
+import heic2any from "heic2any"
+
 export interface ConversionOptions {
   quality?: number
   bgColor?: string
   removeMetadata?: boolean
   autoRotate?: boolean
+}
+
+// Check if file is HEIC/HEIF format
+function isHeicFile(file: File): boolean {
+  const fileName = file.name.toLowerCase()
+  const mimeType = file.type.toLowerCase()
+  return (
+    fileName.endsWith(".heic") ||
+    fileName.endsWith(".heif") ||
+    mimeType === "image/heic" ||
+    mimeType === "image/heif"
+  )
+}
+
+// Convert HEIC to a standard format (PNG) first
+async function convertHeicToBlob(file: File): Promise<Blob> {
+  const result = await heic2any({
+    blob: file,
+    toType: "image/png",
+    quality: 1,
+  })
+  // heic2any can return a single blob or array of blobs
+  return Array.isArray(result) ? result[0] : result
 }
 
 export async function convertImageFile(
@@ -12,8 +37,14 @@ export async function convertImageFile(
 ): Promise<Blob> {
   const { quality = 100, bgColor = "" } = options
 
-  // First, read the file as a data URL using FileReader (more reliable than blob URLs)
-  const dataUrl = await readFileAsDataURL(file)
+  // Handle HEIC/HEIF files - convert to PNG first
+  let processedFile: File | Blob = file
+  if (isHeicFile(file)) {
+    processedFile = await convertHeicToBlob(file)
+  }
+
+  // Read the file as a data URL using FileReader (more reliable than blob URLs)
+  const dataUrl = await readFileAsDataURL(processedFile)
   
   return new Promise((resolve, reject) => {
     const img = new Image()

@@ -3,12 +3,12 @@ import { Heart } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border/40 bg-background/60 backdrop-blur-sm">
-      <div className="mx-auto max-w-5xl px-4 py-6">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+    <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/40 bg-background/95 backdrop-blur-sm">
+      <div className="mx-auto max-w-5xl px-4 py-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <span>Made with</span>
-            <Heart className="w-4 h-4 text-accent fill-accent" />
+            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
             <span>by</span>
             <Link 
               href="https://thenextlevelsoftware.com/" 
