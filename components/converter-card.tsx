@@ -100,7 +100,7 @@ export function ConverterCard() {
         const url = URL.createObjectURL(blob)
         const baseName = file.name.replace(/\.[^/.]+$/, "")
         results.push({
-          originalName: baseName,
+          originalName: `nls_converted_${baseName}`,
           blob,
           url,
         })
@@ -145,7 +145,7 @@ export function ConverterCard() {
     const url = URL.createObjectURL(zipBlob)
     const link = document.createElement("a")
     link.href = url
-    link.download = `converted-images.zip`
+    link.download = `nls_converted_images.zip`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -229,11 +229,11 @@ export function ConverterCard() {
               {isMultiple ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {previews.map((preview, i) => (
-                    <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-muted border border-border">
+                    <div key={i} className="relative aspect-square rounded-none overflow-hidden bg-muted border border-border">
                       <img
                         src={preview.previewUrl}
                         alt={preview.file.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-none"
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm px-2 py-1">
                         <p className="text-xs text-foreground truncate">{preview.file.name}</p>
@@ -318,11 +318,11 @@ export function ConverterCard() {
               {isMultiple ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {convertedFiles.map((converted, i) => (
-                    <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-muted border border-border">
+                    <div key={i} className="relative aspect-square rounded-none overflow-hidden bg-muted border border-border">
                       <img
                         src={converted.url}
                         alt={converted.originalName}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-none"
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm px-2 py-1">
                         <p className="text-xs text-foreground truncate">{converted.originalName}.{targetFormat}</p>

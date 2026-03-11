@@ -21,7 +21,7 @@ export function ImagePreview({ src, alt = "Preview", className }: ImagePreviewPr
 
   return (
     <div className={cn("space-y-3", className)}>
-      <div className="relative overflow-hidden rounded-xl bg-muted/50 border border-border">
+      <div className="relative overflow-hidden rounded-none bg-muted/50 border border-border">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,_#e5e7eb_25%,_transparent_25%,_transparent_50%,_#e5e7eb_50%,_#e5e7eb_75%,_transparent_75%,_transparent)] bg-[length:16px_16px] dark:bg-[linear-gradient(45deg,_#374151_25%,_transparent_25%,_transparent_50%,_#374151_50%,_#374151_75%,_transparent_75%,_transparent)]" />
         <div className="relative flex items-center justify-center min-h-[200px] max-h-[400px] p-4 overflow-auto">
           <img
@@ -31,7 +31,7 @@ export function ImagePreview({ src, alt = "Preview", className }: ImagePreviewPr
               transform: `scale(${zoom}) rotate(${rotation}deg)`,
               transition: "transform 0.2s ease-out"
             }}
-            className="max-w-full max-h-[360px] object-contain rounded-lg shadow-lg"
+            className="max-w-full max-h-[360px] object-contain shadow-lg"
           />
         </div>
       </div>
